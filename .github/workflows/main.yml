@@ -31,4 +31,14 @@ jobs:
           MY_VAR: Hi there!
           FIRST_NAME: John
         run: |
-          echo "$MY_VAR $FIRST_NAME" 
+          echo "$MY_VAR $FIRST_NAME"
+      - name: next step
+        if: success()
+        run: echo "The previous step has finished successfully"
+      - name: First interaction
+        uses: actions/first-interaction@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          issue-message: 'Msg that will be displayed on users first issue'
+          pr-message: 'Message that will be displayed on first pr'
+
