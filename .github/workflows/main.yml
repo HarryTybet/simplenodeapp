@@ -2,15 +2,20 @@ name: build
 on:
   push:
     paths:
-      - '*.js'
+      - '**.js'
 jobs:
   build:
-    runs: ${{ matrix.os }}
+    name: my job
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest, ubuntu-18.04]
         node: [10, 12, 14]
-        exlude:
+        include:
+          - node: 13
+            os: ubuntu-18.0
+            experimental: true
+        exclude:
           - os: macos-latest
             node: 10
     steps:
@@ -19,4 +24,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node }}
+      - run: npm ci
+      - run: npm run build --if-present
     
