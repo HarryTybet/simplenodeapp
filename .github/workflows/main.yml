@@ -1,0 +1,22 @@
+name: build
+on:
+  push:
+    paths:
+      - '*.js'
+jobs:
+  build:
+    runs: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, ubuntu-18.04]
+        node: [10, 12, 14]
+        exlude:
+          - os: macos-latest
+            node: 10
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use node.js ${{ matrix.node }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+    
