@@ -26,4 +26,9 @@ jobs:
           node-version: ${{ matrix.node }}
       - run: npm ci
       - run: npm run build --if-present
-    
+      - name: test step
+        env:
+          MY_VAR: Hi there!
+          FIRST_NAME: John
+        run: |
+          echo "$MY_VAR $FIRST_NAME" 
